@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Event Schema",
+    "description": "Represents a single parsed Windows event used by the analyzer and AI explainer.",
+    "type": "object",
+    "properties": {
+        "raw_event": {
+            "type": "string",
+            "description": "The original unmodified event text."
+        },
+        "timestamp": {
+            "type": ["string", "null"],
+            "description": "Extracted timestamp in string format, or null if not found."
+        },
+        "severity": {
+            "type": ["string", "null"],
+            "enum": ["info", "warning", "error", "critical", null],
+            "description": "Severity classification after local analysis."
+        },
+        "patterns": {
+            "type": "object",
+            "description": "Pattern detection results.",
+            "properties": {
+                "matches": {
+                    "type": "object",
+                    "properties": {
+                        "authentication_issue": { "type": "boolean" },
+                        "network_issue": { "type": "boolean" },
+                        "service_issue": { "type": "boolean" },
+                        "filesystem_issue": { "type": "boolean" },
+                        "security_flag": { "type": "boolean" },
+                        "kernel_issue": { "type": "boolean" }
+                    },
+                    "required": [
+                        "authentication_issue",
+                        "network_issue",
+                        "service_issue",
+                        "filesystem_issue",
+                        "security_flag",
+                        "kernel_issue"
+                    ]
+                },
+                "match_count": {
+                    "type": "number",
+                    "description": "Number of matched patterns."
+                }
+            },
+            "required": ["matches", "match_count"]
+        },
+        "recommended_focus": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "List of focus areas recommended by analyzer."
+        }
+    },
+    "required": ["raw_event"]
+}

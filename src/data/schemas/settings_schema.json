@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Application Settings Schema",
+    "description": "Schema for user-modifiable application settings (Gemini-only).",
+    "type": "object",
+
+    "properties": {
+        "GEMINI_API_KEY": {
+            "type": "string",
+            "minLength": 12,
+            "description": "API key used to authenticate with Gemini."
+        },
+
+        "theme": {
+            "type": "string",
+            "enum": ["light", "dark"],
+            "description": "Active UI theme selection."
+        },
+
+        "default_log_directory": {
+            "type": "string",
+            "description": "Optional path used when opening log files."
+        }
+    },
+
+    "required": ["GEMINI_API_KEY"]
+}
